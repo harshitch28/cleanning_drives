@@ -2,6 +2,8 @@ package com.cleanliness.drive.Entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table
 public class Users {
@@ -12,6 +14,16 @@ public class Users {
     private String username;
     private String password;
     private String roles;
+    @OneToMany(mappedBy = "creator")
+    private List<Drives> drivesList;
+
+    public List<Drives> getDrivesList() {
+        return drivesList;
+    }
+
+    public void setDrivesList(List<Drives> drivesList) {
+        this.drivesList = drivesList;
+    }
 
     public Long getId() {
         return id;
@@ -44,4 +56,6 @@ public class Users {
     public void setRoles(String roles) {
         this.roles = roles;
     }
+
+
 }

@@ -18,7 +18,7 @@ public class RegisterService {
     }
 
     public String register(AuthRequest request) {
-        if(usersRepository.findByUsername(request.getUsername()).isPresent()){
+        if(usersRepository.findByUsername(request.getUsername()) != null){
             return "Username already exists!";
         }
         Users user = new Users();

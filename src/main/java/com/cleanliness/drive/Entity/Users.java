@@ -11,11 +11,20 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
+    private String email;
     private String username;
     private String password;
     private String roles;
     @OneToMany(mappedBy = "creator")
     private List<Drives> drivesList;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public List<Drives> getDrivesList() {
         return drivesList;

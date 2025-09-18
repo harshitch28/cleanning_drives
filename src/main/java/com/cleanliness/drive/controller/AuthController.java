@@ -1,6 +1,7 @@
 package com.cleanliness.drive.controller;
 
-import com.cleanliness.drive.dto.AuthRequest;
+import com.cleanliness.drive.dto.LoginRequest;
+import com.cleanliness.drive.dto.RegisterRequest;
 import com.cleanliness.drive.service.RegisterService;
 import com.cleanliness.drive.util.JwtUtil;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,15 +29,15 @@ public class AuthController {
     }
     
     @PostMapping("/login")
-    public String login(@RequestBody AuthRequest request){
-        authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername() ,request.getPassword()));
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
+    public String login(@RequestBody LoginRequest request){
+        authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
         final String token = jwtUtil.generateToken(userDetails.getUsername());
         return token;
     }
 
     @PostMapping("/register")
-    public String register(@RequestBody AuthRequest request){
+    public String register(@RequestBody RegisterRequest request){
         return registerService.register(request);
     }
 }

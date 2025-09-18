@@ -18,7 +18,7 @@ public class DashboardController {
         this.drivesService = drivesService;
     }
 
-    @GetMapping("/allDrives")
+    @GetMapping("/all-drives")
     public List<Drives> listAllDrives(){
         return drivesService.getAllDrives();
     }

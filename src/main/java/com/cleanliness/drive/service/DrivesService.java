@@ -4,6 +4,7 @@ import com.cleanliness.drive.Entity.Drives;
 import com.cleanliness.drive.dto.DriveAddRequest;
 import com.cleanliness.drive.repository.DrivesRepository;
 import com.cleanliness.drive.repository.UsersRepository;
+import com.cleanliness.drive.util.CurrentUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -27,13 +28,12 @@ public class DrivesService {
     }
 
     public String addDrive(DriveAddRequest driveAddRequest) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
+        String username = CurrentUser.getCurrentUsername();
         Drives drives = new Drives();
         drives.setDescription(driveAddRequest.getDescription());
         drives.setName(driveAddRequest.getName());
         drives.setStatus(driveAddRequest.getStatus());
-        drives.setCreator(usersRepository.findByUsername(username));
+        drives.setCreator(usersRepository.findByEmail(username));
         drivesRepository.save(drives);
         return "Drive added successfully";
     }

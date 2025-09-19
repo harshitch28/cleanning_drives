@@ -17,6 +17,13 @@ public class Users {
     private String roles;
     @OneToMany(mappedBy = "creator")
     private List<Drives> drivesList;
+    @ManyToMany
+    @JoinTable(
+            name = "enrolled_drives",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "drive_id")
+    )
+    private List<Drives> enrolledIn;
 
     public String getEmail() {
         return email;
@@ -24,6 +31,14 @@ public class Users {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Drives> getEnrolledIn() {
+        return enrolledIn;
+    }
+
+    public void setEnrolledIn(List<Drives> enrolledIn) {
+        this.enrolledIn = enrolledIn;
     }
 
     public List<Drives> getDrivesList() {

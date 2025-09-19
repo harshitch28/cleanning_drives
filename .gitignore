@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 .env
+progress.txt
 
 ### STS ###
 .apt_generated

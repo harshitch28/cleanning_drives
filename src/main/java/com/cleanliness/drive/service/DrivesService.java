@@ -1,12 +1,11 @@
 package com.cleanliness.drive.service;
 
 import com.cleanliness.drive.Entity.Drives;
+import com.cleanliness.drive.Entity.Users;
 import com.cleanliness.drive.dto.DriveAddRequest;
 import com.cleanliness.drive.repository.DrivesRepository;
 import com.cleanliness.drive.repository.UsersRepository;
 import com.cleanliness.drive.util.CurrentUser;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,5 +35,22 @@ public class DrivesService {
         drives.setCreator(usersRepository.findByEmail(username));
         drivesRepository.save(drives);
         return "Drive added successfully";
+    }
+
+    public Drives getDriveById(long id) {
+        return drivesRepository.getReferenceById(id);
+    }
+
+    public String enrollInDrive(long id) {
+        Drives drives = drivesRepository.getReferenceById(id);
+        List<Users> userList = drives.getEnrolled();
+        String username = CurrentUser.getCurrentUsername();
+        Users currUser = usersRepository.findByEmail(username);
+        userList.add(currUser);
+        List<Drives> userEnrolledDriveList = currUser.getEnrolledIn();
+        userEnrolledDriveList.add(drives);
+        drivesRepository.updateEnrolledById(userList,id);
+        usersRepository.updateEnrolledInByUsername(userEnrolledDriveList,username);
+        return "Enrolled in Drive Successfully";
     }
 }

@@ -3,6 +3,7 @@ package com.cleanliness.drive.Entity;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table
@@ -17,6 +18,8 @@ public class Drives {
     @ManyToOne
     @JoinColumn(name = "creator_id")
     private Users creator;
+    @ManyToMany(mappedBy = "enrolledIn")
+    private List<Users> enrolled;
 
     public long getId() {
         return id;
@@ -24,6 +27,14 @@ public class Drives {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public List<Users> getEnrolled() {
+        return enrolled;
+    }
+
+    public void setEnrolled(List<Users> enrolled) {
+        this.enrolled = enrolled;
     }
 
     public String getName() {
